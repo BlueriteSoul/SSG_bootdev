@@ -1,5 +1,3 @@
-#from ? import ?
-
 def block_to_block_type(block):
     lines = block.split("\n")
     isQuote = None
@@ -25,7 +23,7 @@ def block_to_block_type(block):
             case _:
                 pass
     if block[:3] == block[-3:]:
-            if block[0] == "`":
+            if block[:3] == "`":
                 return "code"
     for line in lines:
         if line[0] != ">":

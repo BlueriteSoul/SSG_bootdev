@@ -16,6 +16,14 @@ def blockToTextValue(text, tag):
             return text[6:]
         case "h6":
             return text[7:]
+        case "code":
+            return text[3:-3]
+        case "quote":
+            lines = text.split("\n")
+            returnText = ""
+            for line in lines:
+                returnText += line[2:]
+            return returnText
         case _:
             raise Exception("Error in blockToTextValue conver.py")
 
@@ -54,11 +62,16 @@ def markdown_to_html_node(markdown):
                 html.append(LeafNode(blockTag, blockToTextValue(block, blockTag)))
             case "h6":
                 html.append(LeafNode(blockTag, blockToTextValue(block, blockTag)))
+            case "code":
+                
+                html.append(LeafNode(blockTag, blockToTextValue(block, blockTag)))
+            case "quote":
+                html.append(LeafNode("blockquote", blockToTextValue(block, blockTag)))
             case "p":
                 html.append(ParentNode(blockTag, textToChildren(block)))
             case "unordered_list":
                 html.append(ParentNode("ul", textToChildrenList(block)))
             case "ordered_list":
                 html.append(ParentNode("ol", textToChildrenList(block)))
-    print(html)
-    return ParentNode("html", html)
+    #print(html)
+    return ParentNode("div", html)

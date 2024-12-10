@@ -38,7 +38,7 @@ class TestTextNodeToHTMLNode(unittest.TestCase):
     def test3(self):
         with self.assertRaises(ValueError):
             tn2 = TextNode("Second serious test", "lilatic")
-            print(tn2)
+            #print(tn2)
     def test4(self):
         tn3 = TextNode("Third serious test", "italic")
         self.assertEqual(text_node_to_html_node(tn3).to_html(), "<i>Third serious test</i>")
