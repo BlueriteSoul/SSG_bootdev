@@ -17,7 +17,8 @@ def blockToTextValue(text, tag):
         case "h6":
             return text[7:]
         case "code":
-            return text[3:-3]
+            returnText = "<pre>" + text[3:-3] + "</pre>"
+            return returnText
         case "quote":
             lines = text.split("\n")
             returnText = ""
@@ -28,12 +29,28 @@ def blockToTextValue(text, tag):
             raise Exception("Error in blockToTextValue conver.py")
 
 
-def textToChildrenList(text):
+def textToChildrenUnList(text):
     lines = text.split("\n")
     returnList = []
     for line in lines:
-        returnList.append(LeafNode("li", line[2:]))
+        textNodesInLine = text_to_textnodes(line[2:])
+        leafList = []
+        for textnode in textNodesInLine:
+            leafList.append(LeafNode(textnode.get_tag(), textnode.text))
+        returnList.append(ParentNode("li", leafList))
     return returnList
+
+def textToChildrenOrList(text):
+    lines = text.split("\n")
+    returnList = []
+    for line in lines:
+        textNodesInLine = text_to_textnodes(line[3:])
+        leafList = []
+        for textnode in textNodesInLine:
+            leafList.append(LeafNode(textnode.get_tag(), textnode.text))
+        returnList.append(ParentNode("li", leafList))
+    return returnList
+
 
 def textToChildren(text):
     textNodes = text_to_textnodes(text)
@@ -62,16 +79,15 @@ def markdown_to_html_node(markdown):
                 html.append(LeafNode(blockTag, blockToTextValue(block, blockTag)))
             case "h6":
                 html.append(LeafNode(blockTag, blockToTextValue(block, blockTag)))
-            case "code":
-                
+            case "code":                
                 html.append(LeafNode(blockTag, blockToTextValue(block, blockTag)))
             case "quote":
                 html.append(LeafNode("blockquote", blockToTextValue(block, blockTag)))
             case "p":
                 html.append(ParentNode(blockTag, textToChildren(block)))
             case "unordered_list":
-                html.append(ParentNode("ul", textToChildrenList(block)))
+                html.append(ParentNode("ul", textToChildrenUnList(block)))
             case "ordered_list":
-                html.append(ParentNode("ol", textToChildrenList(block)))
+                html.append(ParentNode("ol", textToChildrenOrList(block)))
     #print(html)
     return ParentNode("div", html)

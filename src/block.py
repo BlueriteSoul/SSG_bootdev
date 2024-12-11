@@ -22,9 +22,14 @@ def block_to_block_type(block):
                 return "h6"
             case _:
                 pass
-    if block[:3] == block[-3:]:
-            if block[:3] == "`":
-                return "code"
+    #if block[:3] == block[-3:]:
+    #        if block[:3] == "`":
+    #            return "code"
+    #if lines[0][:3] == lines[-1][-3]:
+    #    if lines[0][0] == "`":
+    #        return "code"
+    if block.startswith("```") and block.endswith("```"):
+        return "code"
     for line in lines:
         if line[0] != ">":
             isQuote = False

@@ -36,9 +36,6 @@ class LeafNode(HTMLNode):
             raise ValueError("No value")
         if self.tag == None:
             return self.value
-        if self.tag == "code":
-            result = f'<pre><{self.tag}{self.props_to_html()}>{self.value}</{self.tag}></pre>'
-            return result
         result = f'<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>'
         return result
     
