@@ -44,7 +44,7 @@ class TestTextNodeToHTMLNode(unittest.TestCase):
         self.assertEqual(text_node_to_html_node(tn3).to_html(), "<i>Third serious test</i>")
     def test5(self):
         tn4 = TextNode("Fourth serious test", "code")
-        self.assertEqual(text_node_to_html_node(tn4).to_html(), "<pre><code>Fourth serious test</code></pre>")
+        self.assertEqual(text_node_to_html_node(tn4).to_html(), "<code>Fourth serious test</code>")
     def test6(self):
         tn5 = TextNode("Fifth serious test", "image", "obrazek.com")
         self.assertEqual(text_node_to_html_node(tn5).to_html(), '<img src="obrazek.com" alt="Fifth serious test"></img>')

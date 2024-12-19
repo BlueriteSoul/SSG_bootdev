@@ -17,7 +17,7 @@ def blockToTextValue(text, tag):
         case "h6":
             return text[7:]
         case "code":
-            returnText = "<pre>" + text[3:-3] + "</pre>"
+            returnText = text[3:-3]
             return returnText
         case "quote":
             lines = text.split("\n")
@@ -80,7 +80,7 @@ def markdown_to_html_node(markdown):
             case "h6":
                 html.append(LeafNode(blockTag, blockToTextValue(block, blockTag)))
             case "code":                
-                html.append(LeafNode(blockTag, blockToTextValue(block, blockTag)))
+                html.append(ParentNode("pre", [LeafNode(blockTag, blockToTextValue(block, blockTag))]))
             case "quote":
                 html.append(LeafNode("blockquote", blockToTextValue(block, blockTag)))
             case "p":
